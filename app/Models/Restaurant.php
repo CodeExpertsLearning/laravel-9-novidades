@@ -20,4 +20,9 @@ class Restaurant extends Model
             set: fn($value) => $value . ' ok '
         );
     }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
+    }
 }

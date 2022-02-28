@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Models\{Restaurant, Menu};
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,10 +24,20 @@ Route::get('/', function () {
 Route::controller(\App\Http\Controllers\RestaurantController::class)
         ->name('restaurants.')
         ->prefix('restaurants')
+        ->scopeBindings() //aplica o route model binding com escopo para rotas com parametros aninhados
         ->group(function(){
 
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
 
+            Route::get('/{restaurant}/menus/{menu}', function(Restaurant $restaurant, Menu $menu){
+                dd($menu);
+            });
+
         });
 
+
+// Route::get('/restaurants/{restaurant}/menus/{menu}', function(Restaurant $restaurant, Menu $menu){
+//     dd($menu);
+// })
+// ->scopeBindings();
